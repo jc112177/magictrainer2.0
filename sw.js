@@ -1,5 +1,5 @@
 // Tabletop Mage service worker: offline app shell + cached card images
-const SHELL_CACHE = 'tm-shell-v1';
+const SHELL_CACHE = 'tm-shell-v2';
 const CARD_CACHE = 'tm-cards-v1';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png'];
 
