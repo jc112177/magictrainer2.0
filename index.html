@@ -1008,7 +1008,7 @@ const humanHasResponse=()=>P('me').hand.some(c=>(isInstant(c)||kw(c,'flash'))&&c
 function waitUser(kind,data){return new Promise(res=>{G.waits.push({kind,data,res,busy:false});renderAll()})}
 const topWait=()=>G&&G.waits[G.waits.length-1];
 function resolveWait(v){const w=G.waits.pop();renderAll();w&&w.res(v)}
-async function pause(ms){const g=G;if(G&&tut()&&V.on&&G.active==='bot')await V.idle(16000);await sleep(ms);if(G!==g)throw ABORT}
+async function pause(ms){const g=G;if(G&&tut()&&V.on&&G.active==='bot')await V.idle(7000);await sleep(ms);if(G!==g)throw ABORT}
 async function handleAt(w,fn){if(!w||w.busy)return;w.busy=true;const g=G;try{await fn()}catch(e){if(e!==ABORT)console.error(e)}finally{w.busy=false;if(G===g){renderAll();updateCoach()}}}
 
 /* ----- log & coach ----- */
@@ -2368,19 +2368,20 @@ const V={on:LS.get('mtg_voice',true),rate:LS.get('mtg_vrate',1),vname:LS.get('mt
     const sents=t.match(/[^.!?]+[.!?]*/g)||[t];const lim=this.engine==='ai'?170:230;let buf='';
     for(const p of sents){const x=p.trim();if(!x)continue;if(buf&&(buf+' '+x).length>lim){this.q.push({text:buf,kind});buf=x}else buf=buf?buf+' '+x:x}
     if(buf)this.q.push({text:buf,kind});
+    if(kind==='note'){const notes=this.q.filter(x=>x.kind==='note');if(notes.length>4){const drop=new Set(notes.slice(0,notes.length-4));this.q=this.q.filter(x=>!drop.has(x))}}
     this.pump();
   },
   engine:LS.get('mtg_vengine',matchMedia('(pointer:coarse)').matches?'browser':'ai'),audio:null,
   pump(){if(this.cur||!this.q.length)return;
-    if(this.engine==='ai'){if(AIV.ready)return this.pumpAI();if(!AIV.failed&&!AIV.loading)AIV.load()}
+    if(this.engine==='ai'&&!this.useBrowserOnce){if(AIV.ready)return this.pumpAI();if(!AIV.failed&&!AIV.loading)AIV.load()}this.useBrowserOnce=false;
     const it=this.q.shift();this.cur=it;const u=new SpeechSynthesisUtterance(it.text);this.voice=this.voice||this.pick();if(this.voice)u.voice=this.voice;const nat=this.voice&&this.rank(this.voice)<=1;u.rate=this.rate*(nat?1:.94);u.pitch=1;u.volume=1;
     const done=()=>{if(this.cur===it){this.cur=null;document.body.classList.remove('speaking');setTimeout(()=>this.pump(),60)}};u.onend=done;u.onerror=done;document.body.classList.add('speaking');speechSynthesis.speak(u);
     setTimeout(()=>{if(this.cur===it&&!speechSynthesis.speaking){done()}},1500+it.text.length*120)},
   pumpAI(){const it=this.q.shift();this.cur=it;document.body.classList.add('speaking');
     const done=()=>{if(this.cur===it){this.cur=null;this.audio=null;document.body.classList.remove('speaking');setTimeout(()=>this.pump(),40)}};
     const pr=it.audio||AIV.synth(it.text);if(this.q[0]&&!this.q[0].audio)this.q[0].audio=AIV.synth(this.q[0].text);
-    pr.then(url=>{if(this.cur!==it){return}const au=new Audio(url);this.audio=au;au.onended=()=>{URL.revokeObjectURL(url);done()};au.onerror=done;au.play().catch(done)}).catch(()=>{if(this.cur===it){this.cur=null;this.q.unshift(it);AIV.ready=false;AIV.failed=true;this.pump()}})},
-  stop(){this.q=[];this.cur=null;if(this.audio){try{this.audio.pause()}catch(e){}this.audio=null}if(this.ok())speechSynthesis.cancel();document.body.classList.remove('speaking')},
+    pr.then(url=>{if(this.cur!==it){return}const au=new Audio(url);this.audio=au;au.onended=()=>{URL.revokeObjectURL(url);done()};au.onerror=done;au.play().catch(done)}).catch(err=>{if(this.cur===it){this.cur=null;if(String(err&&err.message)!=='cancelled'){this.q.unshift(it);this.useBrowserOnce=true}this.pump()}})},
+  stop(){this.q=[];this.cur=null;if(typeof AIV!=='undefined')AIV.cancel();if(this.audio){try{this.audio.pause()}catch(e){}this.audio=null}if(this.ok())speechSynthesis.cancel();document.body.classList.remove('speaking')},
   replay(){if(this.last)this.say(this.last,{kind:'lesson',interrupt:true})},
   idle(max=12000){return new Promise(res=>{const t0=Date.now();const ch=()=>{if((!this.cur&&!this.q.length)||!this.on||Date.now()-t0>max)res();else setTimeout(ch,200)};ch()})}
 };
@@ -2783,21 +2784,35 @@ document.addEventListener('mousemove',e=>{const el=e.target.closest&&e.target.cl
 /* =========================================================
    Natural AI voice (Kokoro, free & open source, runs on this PC)
    ========================================================= */
-const AIV={tts:null,ready:false,failed:false,loading:null,chain:Promise.resolve(),voice:LS.get('mtg_aivoice','af_heart'),gpu:LS.get('mtg_aigpu',false),
+const AIV={ready:false,failed:false,loading:null,worker:null,pend:new Map(),nid:1,files:{},voice:LS.get('mtg_aivoice','af_heart'),gpu:LS.get('mtg_aigpu',false),
   toast(html,pct){const t=$('#vToast');if(!html){t.style.display='none';return}t.style.display='block';t.innerHTML=html+(pct!=null?`<div class="pb"><i style="width:${pct}%"></i></div>`:'')},
+  // Kokoro runs in a background Web Worker so speech generation never freezes the app.
+  WORKER:`import {KokoroTTS} from 'https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm';
+let tts=null,q=[],busy=false;
+const load=async(device,dtype)=>KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX',{dtype,device,progress_callback:p=>{if(p&&p.file&&p.total)self.postMessage({type:'prog',file:p.file,loaded:p.loaded||0,total:p.total})}});
+async function next(){if(busy||!q.length)return;busy=true;const m=q.shift();try{const a=await tts.generate(m.text,{voice:m.voice,speed:m.speed});self.postMessage({type:'audio',id:m.id,blob:a.toBlob()})}catch(e){self.postMessage({type:'genErr',id:m.id,msg:String(e)})}busy=false;next()}
+self.onmessage=async e=>{const m=e.data;
+ if(m.type==='load'){try{try{tts=m.gpu?await load('webgpu','fp32'):await load('wasm','q8')}catch(err){tts=await load('wasm','q8')}self.postMessage({type:'ready'})}catch(err){self.postMessage({type:'error',msg:String(err)})}}
+ else if(m.type==='gen'){q.push(m);next()}
+ else if(m.type==='cancel'){const dropped=q.map(x=>x.id);q=[];self.postMessage({type:'cancelled',ids:dropped})}};`,
   load(){if(this.ready)return Promise.resolve(true);if(this.loading)return this.loading;
-    this.loading=(async()=>{
-      this.toast('🎙 Loading the natural coach voice. One-time download (about 90 MB); it runs on your PC, free.',2);
-      const files={};
-      const prog=p=>{if(p&&p.file&&p.total){files[p.file]={l:p.loaded||0,t:p.total};const L=sum(Object.values(files),f=>f.l),T=sum(Object.values(files),f=>f.t);this.toast('🎙 Downloading natural voice… '+Math.round(L/1048576)+' / '+Math.round(T/1048576)+' MB (one time only)',T?L/T*100:5)}};
-      try{
-        const m=await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm');
-        const tryLoad=(device,dtype)=>m.KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX',{dtype,device,progress_callback:prog});
-        try{this.tts=this.gpu&&navigator.gpu?await tryLoad('webgpu','fp32'):await tryLoad('wasm','q8')}catch(e){this.tts=await tryLoad('wasm','q8')}
-        this.ready=true;this.toast('✅ Natural coach voice ready!',100);setTimeout(()=>this.toast(''),2200);return true;
-      }catch(e){console.warn('AI voice failed',e);this.failed=true;this.toast('⚠ Couldn\'t load the natural voice (check your internet connection). Using your browser\'s voice instead. Tip: Microsoft Edge has natural voices built in.');setTimeout(()=>this.toast(''),6000);return false}
-    })();return this.loading},
-  synth(text){const job=this.chain.then(async()=>{const a=await this.tts.generate(text,{voice:this.voice,speed:V.rate});return URL.createObjectURL(a.toBlob())});this.chain=job.catch(()=>{});return job}
+    this.loading=new Promise(res=>{
+      try{const url=URL.createObjectURL(new Blob([this.WORKER],{type:'text/javascript'}));this.worker=new Worker(url,{type:'module'})}catch(e){this.fail(res);return}
+      this.toast('🎙 Loading the natural coach voice. One-time download (about 90 MB), runs on your PC, free. You can keep playing.',2);
+      const to=setTimeout(()=>{if(!this.ready)this.fail(res)},180000);
+      this.worker.onmessage=e=>{const m=e.data;
+        if(m.type==='prog'){this.files[m.file]={l:m.loaded,t:m.total};const L=sum(Object.values(this.files),f=>f.l),T=sum(Object.values(this.files),f=>f.t);this.toast('🎙 Downloading natural voice… '+Math.round(L/1048576)+' / '+Math.round(T/1048576)+' MB (one time only, you can keep playing)',T?L/T*100:5)}
+        else if(m.type==='ready'){clearTimeout(to);this.ready=true;this.toast('✅ Natural coach voice ready!',100);setTimeout(()=>this.toast(''),2200);res(true)}
+        else if(m.type==='error'){clearTimeout(to);console.warn('AI voice failed',m.msg);this.fail(res)}
+        else if(m.type==='audio'){const p=this.pend.get(m.id);if(p){this.pend.delete(m.id);p.ok(URL.createObjectURL(m.blob))}}
+        else if(m.type==='genErr'){const p=this.pend.get(m.id);if(p){this.pend.delete(m.id);p.no(new Error(m.msg))}}
+        else if(m.type==='cancelled'){m.ids.forEach(id=>{const p=this.pend.get(id);if(p){this.pend.delete(id);p.no(new Error('cancelled'))}})}};
+      this.worker.onerror=()=>{clearTimeout(to);this.fail(res)};
+      this.worker.postMessage({type:'load',gpu:this.gpu&&!!navigator.gpu});
+    });return this.loading},
+  fail(res){this.failed=true;this.ready=false;try{this.worker&&this.worker.terminate()}catch(e){}this.worker=null;this.toast('⚠ Couldn\'t load the natural voice. Using your browser\'s voice instead. (Tip: Microsoft Edge has natural voices built in.)');setTimeout(()=>this.toast(''),6000);res&&res(false)},
+  synth(text){if(!this.worker||!this.ready)return Promise.reject(new Error('not ready'));const id=this.nid++;return new Promise((ok,no)=>{this.pend.set(id,{ok,no});this.worker.postMessage({type:'gen',id,text,voice:this.voice,speed:V.rate})})},
+  cancel(){if(this.worker)this.worker.postMessage({type:'cancel'})}
 };
 const AI_VOICES=[['af_heart','Heart: warm & friendly (US)'],['af_bella','Bella: bright & upbeat (US)'],['af_nicole','Nicole: soft & calm (US)'],['af_sarah','Sarah: clear & steady (US)'],['bf_emma','Emma: British'],['bf_isabella','Isabella: British, gentle']];
 function settingsModal(){
@@ -2818,9 +2833,9 @@ function settingsModal(){
   const sync=()=>{$('#aiOpts').style.display=V.engine==='ai'?'':'none';$('#brOpts').style.display=V.engine==='ai'?'none':''};
   $('#vOn').value=V.on?'1':'0';$('#vEng').value=V.engine;$('#anim').value=SET.anim;sync();
   $('#vOn').onchange=e=>V.setOn(e.target.value==='1');
-  $('#vEng').onchange=e=>{V.engine=e.target.value;LS.set('mtg_vengine',V.engine);V.stop();sync();if(V.engine==='ai'){AIV.failed=false;AIV.loading=null;AIV.load().then(ok=>{if($('#aiSt'))$('#aiSt').textContent=ok?'✅ Loaded and ready':'⚠ Could not load'})}};
+  $('#vEng').onchange=e=>{V.engine=e.target.value;LS.set('mtg_vengine',V.engine);V.stop();sync();if(V.engine==='ai'){AIV.failed=false;AIV.loading=null;AIV.ready=false;AIV.load().then(ok=>{if($('#aiSt'))$('#aiSt').textContent=ok?'✅ Loaded and ready':'⚠ Could not load'})}};
   $('#aiV').onchange=e=>{AIV.voice=e.target.value;LS.set('mtg_aivoice',AIV.voice);V.stop()};
-  $('#aiG').onchange=e=>{AIV.gpu=e.target.checked;LS.set('mtg_aigpu',AIV.gpu);AIV.ready=false;AIV.loading=null;AIV.failed=false};
+  $('#aiG').onchange=e=>{AIV.gpu=e.target.checked;LS.set('mtg_aigpu',AIV.gpu);try{AIV.worker&&AIV.worker.terminate()}catch(err){}AIV.worker=null;AIV.ready=false;AIV.loading=null;AIV.failed=false};
   $('#vSel').onchange=e=>{V.vname=e.target.value;LS.set('mtg_vname',V.vname);V.voice=V.pick();V.stop()};
   $('#vRate').oninput=e=>{V.rate=+e.target.value;LS.set('mtg_vrate',V.rate);$('#vRateL').textContent=V.rate+'×'};
   $('#anim').onchange=e=>{SET.anim=e.target.value;saveSet()};
