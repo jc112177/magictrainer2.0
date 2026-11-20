@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GEARSTORM cards</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Inter:wght@400;600;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#5fd4ff}a:hover{color:#9ae6ff}
+button{font-family:Orbitron,sans-serif}
+</style>
+</helmet>
+<div style="width: 1240px; height: 760px; box-sizing: border-box; padding: 56px; display: flex; gap: 48px; align-items: center; background-color: #070b12; background-image: radial-gradient(circle at 1px 1px, rgba(95,212,255,0.10) 1px, transparent 0); background-size: 22px 22px; font-family: Inter, sans-serif; color: #cfe6f2">
+  <div style="width: 270px; flex-shrink: 0; display: flex; flex-direction: column; gap: 18px">
+    <div style="font-family: Orbitron, sans-serif; font-size: 13px; letter-spacing: 4px; color: #ff8a3a">WORLD 02 · MECH WARFARE</div>
+    <h1 style="margin: 0; font-family: Orbitron, sans-serif; font-weight: 900; font-size: 46px; line-height: 1.02; color: #eaf7ff; letter-spacing: 1px">GEAR<br>STORM</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #9fbccc">Living machines that shift between vehicle and battle form. Race in fast, then transform to fight.</p>
+    <div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid #1c3a4a; background-color: #0b1520">
+      <div style="font-family: Orbitron, sans-serif; font-size: 12px; letter-spacing: 2px; color: #5fd4ff">TRY IT: TRANSFORM</div>
+      <div style="display: flex; gap: 8px">
+        <button type="button" onClick="{{ setVehicle }}" style="{{ vehStyle }}">VEHICLE</button>
+        <button type="button" onClick="{{ setBattle }}" style="{{ batStyle }}">BATTLE</button>
+      </div>
+      <div style="font-size: 13.5px; line-height: 1.5"><b style="color: #eaf7ff">Dual mode:</b> every unit has two stat lines. Vehicles are fast and slip past blockers; battle forms hit hard.</div>
+      <div style="font-size: 13.5px; line-height: 1.5"><b style="color: #eaf7ff">Transform:</b> pay its cost any time you could play a tactic.</div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 34px; align-items: center">
+
+    <div style="width: 270px; height: 390px; box-sizing: border-box; padding: 12px; background-color: #121a24; background-image: linear-gradient(160deg, #1e2a38 0%, #0c121a 100%); clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px); box-shadow: inset 0 0 0 2px #5fd4ff, inset 0 0 22px rgba(95,212,255,0.25); display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+        <div style="font-family: Orbitron, sans-serif; font-weight: 700; font-size: 14px; color: #eaf7ff; letter-spacing: 0.5px">VANTOR, IRON HAULER</div>
+        <div style="width: 34px; height: 34px; background-color: #ff8a3a; color: #1a0e04; font-family: Orbitron, sans-serif; font-weight: 900; font-size: 17px; display: flex; align-items: center; justify-content: center; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)">6</div>
+      </div>
+      <div style="width: 246px; height: 150px; background-color: #0a1018; border: 1px solid #2a4a5c; position: relative; overflow: hidden">
+        <sc-if value="{{ battle }}" hint-placeholder-val="{{ false }}">
+          <svg width="246" height="150" viewBox="0 0 246 150" aria-hidden="true" style="display: block">
+            <rect width="246" height="150" fill="#0a1018"></rect>
+            <path d="M0 128 L246 128" stroke="#1c3a4a" stroke-width="2"></path>
+            <rect x="98" y="26" width="50" height="34" rx="4" fill="#3a5068" stroke="#5fd4ff" stroke-width="1.5"></rect>
+            <rect x="108" y="36" width="30" height="8" fill="#5fd4ff"></rect>
+            <rect x="86" y="62" width="74" height="40" rx="3" fill="#c25a1e" stroke="#ff8a3a" stroke-width="1.5"></rect>
+            <rect x="96" y="70" width="54" height="10" fill="#1e2a38"></rect>
+            <rect x="58" y="60" width="24" height="46" rx="6" fill="#3a5068" stroke="#5fd4ff" stroke-width="1.5"></rect>
+            <rect x="164" y="60" width="24" height="46" rx="6" fill="#3a5068" stroke="#5fd4ff" stroke-width="1.5"></rect>
+            <rect x="94" y="102" width="22" height="26" fill="#3a5068" stroke="#5fd4ff" stroke-width="1.5"></rect>
+            <rect x="130" y="102" width="22" height="26" fill="#3a5068" stroke="#5fd4ff" stroke-width="1.5"></rect>
+            <circle cx="70" cy="110" r="7" fill="#ff8a3a"></circle>
+            <circle cx="176" cy="110" r="7" fill="#ff8a3a"></circle>
+          </svg>
+        </sc-if>
+        <sc-if value="{{ vehicle }}" hint-placeholder-val="{{ true }}">
+          <svg width="246" height="150" viewBox="0 0 246 150" aria-hidden="true" style="display: block">
+            <rect width="246" height="150" fill="#0a1018"></rect>
+            <path d="M0 122 L246 122" stroke="#1c3a4a" stroke-width="2"></path>
+            <path d="M0 96 L40 96 M10 106 L60 106 M0 86 L30 86" stroke="#5fd4ff" stroke-width="2" opacity="0.6"></path>
+            <rect x="60" y="66" width="104" height="44" rx="3" fill="#3a5068" stroke="#5fd4ff" stroke-width="1.5"></rect>
+            <path d="M164 110 L164 60 L196 60 L214 82 L214 110 Z" fill="#c25a1e" stroke="#ff8a3a" stroke-width="1.5"></path>
+            <path d="M170 66 L192 66 L204 82 L170 82 Z" fill="#5fd4ff" opacity="0.85"></path>
+            <rect x="208" y="96" width="10" height="8" fill="#ffe08a"></rect>
+            <circle cx="84" cy="116" r="12" fill="#1e2a38" stroke="#5fd4ff" stroke-width="2"></circle>
+            <circle cx="140" cy="116" r="12" fill="#1e2a38" stroke="#5fd4ff" stroke-width="2"></circle>
+            <circle cx="194" cy="116" r="12" fill="#1e2a38" stroke="#5fd4ff" stroke-width="2"></circle>
+          </svg>
+        </sc-if>
+      </div>
+      <div style="font-family: Orbitron, sans-serif; font-size: 11px; letter-spacing: 1.5px; color: #ff8a3a">COMMANDER · {{ modeLabel }}</div>
+      <div style="flex: 1; padding: 10px; background-color: rgba(95,212,255,0.07); border: 1px solid #22465a; font-size: 12.5px; line-height: 1.45; color: #d8eef8">
+        <b style="color: #ffffff">Transform (2)</b> · Switch modes. In vehicle mode, Vantor can't be blocked by battle-mode units.
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <div style="font-family: Orbitron, sans-serif; font-size: 10px; color: #5f7f90">GS-001 · LEGENDARY</div>
+        <div style="padding: 3px 10px; background-color: #0a1018; border: 1px solid #ff8a3a; color: #eaf7ff; font-family: Orbitron, sans-serif; font-weight: 700; font-size: 13px">{{ vantorStats }}</div>
+      </div>
+    </div>
+
+    <div style="width: 270px; height: 390px; box-sizing: border-box; padding: 12px; background-image: linear-gradient(160deg, #1e2a38 0%, #0c121a 100%); clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px); box-shadow: inset 0 0 0 2px #9a7cff, inset 0 0 22px rgba(154,124,255,0.25); display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+        <div style="font-family: Orbitron, sans-serif; font-weight: 700; font-size: 14px; color: #eaf7ff; letter-spacing: 0.5px">KESTREL-9, SKY RECON</div>
+        <div style="width: 34px; height: 34px; background-color: #ff8a3a; color: #1a0e04; font-family: Orbitron, sans-serif; font-weight: 900; font-size: 17px; display: flex; align-items: center; justify-content: center; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)">3</div>
+      </div>
+      <div style="width: 246px; height: 150px; background-color: #0a1018; border: 1px solid #3a2f5c; overflow: hidden">
+        <sc-if value="{{ vehicle }}" hint-placeholder-val="{{ true }}">
+          <svg width="246" height="150" viewBox="0 0 246 150" aria-hidden="true" style="display: block">
+            <rect width="246" height="150" fill="#0a1018"></rect>
+            <circle cx="40" cy="30" r="1.5" fill="#9a7cff"></circle><circle cx="200" cy="20" r="1.2" fill="#9a7cff"></circle><circle cx="170" cy="130" r="1.4" fill="#9a7cff"></circle>
+            <path d="M30 80 L80 80 M20 92 L70 92" stroke="#9a7cff" stroke-width="2" opacity="0.6"></path>
+            <path d="M80 86 L190 74 L214 80 L190 90 Z" fill="#3a5068" stroke="#9a7cff" stroke-width="1.5"></path>
+            <path d="M120 82 L150 40 L166 42 L150 82 Z" fill="#2a3a52" stroke="#9a7cff" stroke-width="1.5"></path>
+            <path d="M120 86 L150 128 L166 126 L150 86 Z" fill="#2a3a52" stroke="#9a7cff" stroke-width="1.5"></path>
+            <path d="M178 76 L198 78 L190 84 Z" fill="#5fd4ff"></path>
+            <path d="M80 86 L64 80 L64 92 Z" fill="#ff8a3a"></path>
+          </svg>
+        </sc-if>
+        <sc-if value="{{ battle }}" hint-placeholder-val="{{ false }}">
+          <svg width="246" height="150" viewBox="0 0 246 150" aria-hidden="true" style="display: block">
+            <rect width="246" height="150" fill="#0a1018"></rect>
+            <path d="M60 60 L104 30 L110 70 Z M186 60 L142 30 L136 70 Z" fill="#2a3a52" stroke="#9a7cff" stroke-width="1.5"></path>
+            <rect x="106" y="22" width="34" height="26" rx="4" fill="#3a5068" stroke="#9a7cff" stroke-width="1.5"></rect>
+            <path d="M112 32 L134 32" stroke="#5fd4ff" stroke-width="4"></path>
+            <path d="M100 50 L146 50 L140 96 L106 96 Z" fill="#3a5068" stroke="#9a7cff" stroke-width="1.5"></path>
+            <rect x="106" y="96" width="14" height="34" fill="#2a3a52" stroke="#9a7cff" stroke-width="1.5"></rect>
+            <rect x="126" y="96" width="14" height="34" fill="#2a3a52" stroke="#9a7cff" stroke-width="1.5"></rect>
+            <path d="M146 58 L176 70 L178 78 L146 68 Z" fill="#2a3a52" stroke="#9a7cff" stroke-width="1.5"></path>
+            <circle cx="182" cy="76" r="4" fill="#ff8a3a"></circle>
+          </svg>
+        </sc-if>
+      </div>
+      <div style="font-family: Orbitron, sans-serif; font-size: 11px; letter-spacing: 1.5px; color: #b9a6ff">SCOUT · {{ modeLabel }}</div>
+      <div style="flex: 1; padding: 10px; background-color: rgba(154,124,255,0.07); border: 1px solid #3a3260; font-size: 12.5px; line-height: 1.45; color: #e2dcff">
+        <b style="color: #ffffff">Airborne</b> · In jet mode, only flying units can block Kestrel-9. When it transforms, look at the top 2 cards of your deck.
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <div style="font-family: Orbitron, sans-serif; font-size: 10px; color: #5f7f90">GS-019 · RARE</div>
+        <div style="padding: 3px 10px; background-color: #0a1018; border: 1px solid #9a7cff; color: #eaf7ff; font-family: Orbitron, sans-serif; font-weight: 700; font-size: 13px">{{ kestrelStats }}</div>
+      </div>
+    </div>
+
+    <div style="width: 270px; height: 390px; box-sizing: border-box; padding: 12px; background-image: linear-gradient(160deg, #2a1c12 0%, #120c08 100%); clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px); box-shadow: inset 0 0 0 2px #ff8a3a, inset 0 0 22px rgba(255,138,58,0.25); display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+        <div style="font-family: Orbitron, sans-serif; font-weight: 700; font-size: 14px; color: #fff3e8; letter-spacing: 0.5px">OVERCLOCK SURGE</div>
+        <div style="width: 34px; height: 34px; background-color: #ff8a3a; color: #1a0e04; font-family: Orbitron, sans-serif; font-weight: 900; font-size: 17px; display: flex; align-items: center; justify-content: center; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)">1</div>
+      </div>
+      <svg width="246" height="150" viewBox="0 0 246 150" aria-hidden="true" style="display: block; border: 1px solid #5c3a22; background-color: #120c08">
+        <rect width="246" height="150" fill="#120c08"></rect>
+        <circle cx="123" cy="75" r="44" fill="none" stroke="#ff8a3a" stroke-width="10" stroke-dasharray="12 8"></circle>
+        <circle cx="123" cy="75" r="26" fill="#2a1c12" stroke="#ffb27a" stroke-width="3"></circle>
+        <path d="M130 46 L112 80 L126 80 L116 106 L140 68 L126 68 Z" fill="#ffe08a"></path>
+        <path d="M30 40 L60 50 M216 40 L186 50 M30 112 L60 102 M216 112 L186 102" stroke="#ffb27a" stroke-width="2"></path>
+      </svg>
+      <div style="font-family: Orbitron, sans-serif; font-size: 11px; letter-spacing: 1.5px; color: #ffb27a">TACTIC · INSTANT</div>
+      <div style="flex: 1; padding: 10px; background-color: rgba(255,138,58,0.08); border: 1px solid #5c3a22; font-size: 12.5px; line-height: 1.45; color: #ffe8d6">
+        Give a unit <b style="color: #ffffff">+3 ATK</b> this turn. If it transformed this turn, it can attack again.
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <div style="font-family: Orbitron, sans-serif; font-size: 10px; color: #8a6a50">GS-052 · COMMON</div>
+        <div style="padding: 3px 10px; background-color: #120c08; border: 1px solid #ff8a3a; color: #fff3e8; font-family: Orbitron, sans-serif; font-weight: 700; font-size: 12px">TACTIC</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1240,"height":760}}'>
+class Component extends DCLogic {
+renderVals() {
+const battle = this.state && this.state.mode === 'battle';
+const on = 'min-height: 44px; flex: 1; padding: 0 10px; border: 1px solid #5fd4ff; background-color: #5fd4ff; color: #04121a; font-weight: 700; font-size: 12px; letter-spacing: 1px; cursor: pointer';
+const off = 'min-height: 44px; flex: 1; padding: 0 10px; border: 1px solid #2a4a5c; background-color: transparent; color: #9fbccc; font-weight: 700; font-size: 12px; letter-spacing: 1px; cursor: pointer';
+return {
+battle: battle,
+vehicle: !battle,
+modeLabel: battle ? 'BATTLE MODE' : 'VEHICLE MODE',
+vantorStats: battle ? 'ATK 7 · HP 8' : 'SPD 5 · ARM 7',
+kestrelStats: battle ? 'ATK 3 · HP 3' : 'SPD 6 · ARM 2',
+vehStyle: battle ? off : on,
+batStyle: battle ? on : off,
+setVehicle: () => this.setState({ mode: 'vehicle' }),
+setBattle: () => this.setState({ mode: 'battle' })
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card Vault: TRAPWORKS and STARFALL ARMADA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Crimson+Pro:ital,wght@0,500;0,700;1,500&family=Special+Elite&family=Orbitron:wght@600;700;900&family=Exo+2:ital,wght@0,500;0,700;1,500&family=Share+Tech+Mono&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#07080b;color:#d8dbe2;font-family:Inter,system-ui,sans-serif}
+body.tw{background:radial-gradient(ellipse at 70% -10%,rgba(122,26,18,.35),transparent 55%),#0a0807}
+body.sfa{background:radial-gradient(ellipse at 70% -10%,rgba(40,90,200,.35),transparent 55%),#04060c}
+header{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:rgba(8,9,12,.82);border-bottom:1px solid rgba(255,255,255,.08);padding:14px 22px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.brand{font-family:Cinzel,serif;font-weight:900;font-size:20px;letter-spacing:2px;margin-right:10px}
+.tabs{display:flex;gap:6px}
+.tab{padding:9px 16px;border:1px solid rgba(255,255,255,.15);background:transparent;color:#cfd3dc;font-weight:800;letter-spacing:1px;cursor:pointer;border-radius:8px;font-size:13px}
+.tab.on.tw{background:linear-gradient(180deg,#e8c987,#a8802f);color:#1c1206;border-color:#e8c987}
+.tab.on.sfa{background:linear-gradient(180deg,#9ae8ff,#1a7aff);color:#04101e;border-color:#9ae8ff}
+select,input{background:#11141b;color:#e6e9ef;border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px}
+input{width:200px}
+.count{margin-left:auto;font-size:13px;color:#8d93a1}
+.intro{padding:18px 22px 0;display:flex;gap:20px;align-items:baseline;flex-wrap:wrap}
+.intro h1{margin:0;font-size:34px}
+body.tw .intro h1{font-family:Cinzel,serif;color:#efe6d2}
+body.sfa .intro h1{font-family:Orbitron,sans-serif;color:#eef4ff}
+.intro .sub{font-size:15px;color:#9aa0ad}
+.legend{display:flex;gap:8px;flex-wrap:wrap;padding:10px 22px}
+.chip{font-size:12px;padding:4px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.14);color:#aeb4c0;cursor:pointer}
+.chip.on{background:rgba(255,255,255,.12);color:#fff}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;padding:18px 22px 60px;justify-items:center}
+.cell{cursor:pointer;transition:transform .18s}
+.cell:hover{transform:translateY(-6px) scale(1.02)}
+
+/* ---------- shared card ---------- */
+.card{width:300px;height:420px;position:relative;padding:10px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.card .art{position:relative;height:178px;overflow:hidden;flex-shrink:0}
+.card .art img{width:100%;height:100%;object-fit:cover;display:block}
+.card .rules{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:4px}
+.card .rules p{margin:0}
+.card .foil{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;background:linear-gradient(115deg,transparent 22%,rgba(255,230,180,.22) 40%,rgba(150,220,255,.2) 50%,rgba(255,150,220,.18) 58%,transparent 74%);background-size:250% 100%;animation:foil 6s linear infinite}
+@keyframes foil{from{background-position:120% 0}to{background-position:-120% 0}}
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px}
+.ph svg{width:70px;height:70px;opacity:.55}
+.ph span{font-size:9px;letter-spacing:3px;opacity:.6}
+.row{display:flex;align-items:center;gap:7px}
+.foot{display:flex;justify-content:space-between;align-items:flex-end;gap:6px}
+.coll{font-size:9px;line-height:1.3}
+
+/* ---------- TRAPWORKS frame ---------- */
+.card.TW{border-radius:13px;background:linear-gradient(160deg,#2c201a,#120d0b 60%,#1f1612);border:2px solid #6b5230;box-shadow:0 22px 44px rgba(0,0,0,.7),inset 0 0 0 3px #120c09,inset 0 0 0 5px var(--wc)}
+.TW .cost{width:40px;height:40px;flex-shrink:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe6a8,#b8862e 55%,#5a3a10);border:2px solid #2a1a08;box-shadow:0 0 0 3px #3a2a14,0 0 0 5px #a07a3a;display:flex;align-items:center;justify-content:center;font:900 20px Cinzel,serif;color:#1a1006}
+.TW .name{flex:1;min-width:0;padding:6px 9px;border-radius:4px;background:linear-gradient(180deg,#e8c987,#b8913f 48%,#8c6a26 52%,#c9a45a);border:1px solid #3a2a10;box-shadow:inset 0 1px 0 rgba(255,255,255,.5);font:700 13.5px/1.12 Cinzel,serif;color:#23170a}
+.TW .art{border:2px solid #050302;box-shadow:0 0 0 1px #6b5230}
+.TW .type{display:flex;justify-content:space-between;align-items:center;padding:4px 8px;border-radius:3px;background:linear-gradient(180deg,#2a1f19,#15100d);border:1px solid #4a372b;font:700 11px Cinzel,serif;color:#efe6d2}
+.TW .rules{padding:8px 10px;border-radius:3px;background:linear-gradient(180deg,#f1e7cf,#ddcda6);border:1px solid #8a7550;color:#1d1712;font:500 12.8px/1.3 'Crimson Pro',serif}
+.TW .rules i{color:#5a4a38}
+.TW .flav{font-family:'Special Elite',monospace;font-size:11px;line-height:1.32;color:#5e4e3c;border-top:1px solid #b3a079;padding-top:4px}
+.TW .coll{color:#9a8c78}
+.TW .stat{display:flex;align-items:center;gap:3px;padding:2px 8px;border-radius:4px;background:linear-gradient(180deg,#3a1410,#1a0806);border:1px solid #c9a227;font:900 15px Cinzel,serif;color:#f3e7cc}
+.TW .badge{padding:2px 9px;border-radius:4px;background:#15100d;border:1px solid #c9a227;font:700 11px Cinzel,serif;letter-spacing:1px;color:#e0a24a}
+.TW .ph{background:radial-gradient(ellipse at 50% 40%,var(--wc2),#0b0807 75%);color:#e0c79a}
+
+/* ---------- STARFALL frame ---------- */
+.card.SFA{border-radius:8px;clip-path:polygon(0 16px,16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%);background:linear-gradient(145deg,#1e2a40,#0a0f1a 45%,#18233a);box-shadow:inset 0 0 0 2px var(--wc),inset 0 0 0 4px #05080f,inset 0 0 26px rgba(90,216,255,.12)}
+.SFA .cost{width:42px;height:42px;flex-shrink:0;clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0 50%);background:radial-gradient(circle at 50% 45%,#fff,#9ae8ff 25%,#1a7aff 70%,#0a2a6a);display:flex;align-items:center;justify-content:center;font:900 19px Orbitron,sans-serif;color:#04101e}
+.SFA .name{flex:1;min-width:0;padding:6px 9px;background:linear-gradient(90deg,rgba(90,216,255,.2),rgba(90,216,255,.03));border-left:3px solid var(--wc);border-bottom:1px solid rgba(90,216,255,.35);font:700 12.5px/1.15 Orbitron,sans-serif;color:#eef4ff}
+.SFA .art{border:1px solid rgba(90,216,255,.5);box-shadow:0 0 14px rgba(90,216,255,.15)}
+.SFA .art:before,.SFA .art:after{content:'';position:absolute;width:13px;height:13px;z-index:2}
+.SFA .art:before{left:5px;top:5px;border-left:2px solid #5ad8ff;border-top:2px solid #5ad8ff}
+.SFA .art:after{right:5px;bottom:5px;border-right:2px solid #5ad8ff;border-bottom:2px solid #5ad8ff}
+.SFA .type{display:flex;justify-content:space-between;align-items:center;padding:4px 8px;background:rgba(5,10,20,.85);border:1px solid #1e3550;font:600 10.5px Orbitron,sans-serif;color:#cfe0f5}
+.SFA .rules{padding:8px 10px;background:linear-gradient(180deg,rgba(16,28,48,.95),rgba(8,14,26,.95));border:1px solid #1e3550;color:#dbe6f5;font:500 12.3px/1.3 'Exo 2',sans-serif}
+.SFA .rules b{color:#9ae8ff}.SFA .rules i{color:#7a8ca8}
+.SFA .flav{font-family:'Share Tech Mono',monospace;font-size:10.5px;line-height:1.35;color:#8aa0bd;border-top:1px solid rgba(90,216,255,.35);padding-top:4px}
+.SFA .coll{font-family:'Share Tech Mono',monospace;color:#6f84a2;font-size:8.3px}
+.SFA .stat{min-width:28px;text-align:center;padding:2px 6px;font:900 14px Orbitron,sans-serif}
+.SFA .badge{padding:2px 9px;background:rgba(90,216,255,.12);border:1px solid #5ad8ff;font:700 10.5px Orbitron,sans-serif;letter-spacing:1px;color:#9ae8ff}
+.SFA .ph{background:radial-gradient(ellipse at 50% 40%,var(--wc2),#04060c 75%);color:#9ae8ff}
+
+/* ---------- modal ---------- */
+#modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;gap:40px;padding:30px;flex-wrap:wrap;overflow:auto}
+#modal.on{display:flex}
+#big{transform:scale(1.45);transform-origin:center;margin:110px 80px}
+.side{max-width:440px;background:#11141b;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:20px;font-size:14px;line-height:1.5}
+.side h3{margin:0 0 6px;font-size:20px}
+.side .k{color:#8d93a1;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-top:12px}
+.side textarea{width:100%;height:150px;background:#07080b;color:#cfd3dc;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:10px;font:12px/1.45 'Share Tech Mono',monospace;resize:vertical}
+.side button{margin-top:8px;padding:9px 14px;border-radius:8px;border:0;font-weight:800;cursor:pointer;background:#e0a24a;color:#1a1006}
+.side .close{background:#2a2f3a;color:#e6e9ef;margin-left:6px}
+code{background:#07080b;padding:2px 6px;border-radius:5px;font-size:12px}
+@media (max-width:700px){header{padding:10px}input{width:140px}#grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}.cell{zoom:.84}#big{transform:scale(1.05);margin:20px 0}}
+</style>
+</head>
+<body class="tw">
+<header>
+  <div class="brand">CARD VAULT</div>
+  <div class="tabs"><button class="tab tw on" data-set="TW">TRAPWORKS</button><button class="tab sfa" data-set="SFA">STARFALL ARMADA</button></div>
+  <input id="q" type="search" placeholder="Search name or text…" aria-label="Search cards">
+  <select id="fType" aria-label="Card type"></select>
+  <select id="fRar" aria-label="Rarity"><option value="">All rarities</option><option value="L">Legendary</option><option value="R">Rare</option><option value="U">Uncommon</option><option value="C">Common</option></select>
+  <select id="fCost" aria-label="Cost"><option value="">Any cost</option></select>
+  <div class="count" id="count"></div>
+</header>
+<div class="intro"><h1 id="setName"></h1><div class="sub" id="setSub"></div></div>
+<div class="legend" id="wings"></div>
+<div id="grid"></div>
+<div id="modal" role="dialog" aria-modal="true"><div id="big"></div><div class="side" id="side"></div></div>
+<script>/*__DATA__*/</script>
+<script>/*__SVG__*/</script>
+<script src="art/manifest.js" onerror="void 0"></script>
+<script>
+const SETS = window.CARD_SETS, SVG = window.CARD_SVG || {};
+const ART = () => window.ART_MANIFEST || {};
+const WC = {Crimson:['#8a1c14','rgba(160,30,20,.55)'],Brass:['#a07a3a','rgba(180,130,50,.5)'],Drowned:['#2f6a66','rgba(40,120,115,.55)'],Ash:['#5a5a54','rgba(110,110,100,.45)'],Lantern:['#c98a2a','rgba(220,150,50,.45)'],
+  'United Navy':['#5a9aff','rgba(60,120,255,.5)'],'Helios Syndicate':['#ffc24a','rgba(255,180,60,.45)'],'Red Talon':['#ff5a3a','rgba(255,80,50,.45)'],'Void Choir':['#b06aff','rgba(160,90,255,.5)'],'Frontier Union':['#7ac24a','rgba(110,190,70,.45)']};
+const RC = {TW:{C:'#9a9a9a',U:'#cfd9e4',R:'#e0b452',L:'#ff6a3a'},SFA:{C:'#8a96a8',U:'#cfe0f5',R:'#ffc24a',L:'#ff5ad0'}};
+const RN = {C:'Common',U:'Uncommon',R:'Rare',L:'Legendary'};
+const ICON = {
+ Mastermind:'<path d="M12 3c-4 0-7 3-7 7v3l2 2v4h10v-4l2-2v-3c0-4-3-7-7-7zM9 11h2v2H9zm4 0h2v2h-2z"/>',
+ Survivor:'<circle cx="12" cy="6" r="3"/><path d="M7 21l2-8-3-2 4-2h4l4 2-3 2 2 8h-2l-2-6-2 6z"/>',
+ Minion:'<path d="M6 4h12l-1 9-5 7-5-7zM9 8v3h2V8zm4 0v3h2V8z"/>',
+ Trap:'<path d="M2 18h20l-3-4-3 3-4-6-4 6-3-3z"/><path d="M4 18l1-7 2 4 2-8 3 8 3-8 2 8 2-4 1 7z" opacity=".5"/>',
+ Device:'<circle cx="12" cy="12" r="4"/><path d="M12 2l1.5 3h-3zM12 22l-1.5-3h3zM2 12l3-1.5v3zM22 12l-3 1.5v-3zM5 5l3 1-2 2zM19 19l-3-1 2-2zM19 5l-1 3-2-2zM5 19l1-3 2 2z"/>',
+ Room:'<path d="M4 21V5l8-3 8 3v16h-6v-6h-4v6z"/>',Trial:'<path d="M4 4h7v16H4zM13 4h7v16h-7z"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/>',
+ Event:'<path d="M13 2L4 14h6l-1 8 9-12h-6z"/>',
+ Flagship:'<path d="M2 13l20-6-4 6 4 4-20-4z"/>',Ship:'<path d="M3 12l16-4-3 4 3 4z"/>',Frame:'<path d="M9 2h6v4h3l2 7h-3l1 9h-4l-2-6-2 6H6l1-9H4l2-7h3z"/>',
+ Pilot:'<circle cx="12" cy="9" r="6"/><path d="M8 8h8v3H8zM5 22c1-5 4-7 7-7s6 2 7 7z"/>',Squadron:'<path d="M2 8l8 2-2-4zM14 14l8 2-2-4zM8 18l8 2-2-4z"/>',
+ Station:'<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" stroke-width="2"/>',
+ Upgrade:'<path d="M12 2l4 6h-3v6h-2V8H8zM5 16h14v6H5z"/>',Tactic:'<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2"/><path d="M12 1v6M12 17v6M1 12h6M17 12h6" stroke="currentColor" stroke-width="2"/>'
+};
+let cur = 'TW', wingF = '';
+const esc = s => String(s ?? '').replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+function artHTML(c){
+  const src = ART()[c.id] || SVG[c.svg];
+  if (src) return `<img src="${src}" alt="${esc(c.name)} artwork" loading="lazy">`;
+  return `<div class="ph"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${ICON[c.type]||''}</svg><span>ART PENDING · ${c.id}</span></div>`;
+}
+function cardHTML(c){
+  const S = c.set, [wc, wc2] = WC[c.wing] || ['#888','rgba(120,120,120,.4)'], rc = RC[S][c.r];
+  const ab = c.ab.map(a => `<p><b>${esc(a.kw)}</b> ${esc(a.body)} ${a.rem ? `<i>${esc(a.rem)}</i>` : ''}</p>`).join('');
+  let stats;
+  if (c.badge) stats = `<div class="badge">${esc(c.badge)}</div>`;
+  else if (S === 'TW') stats = `<div class="row" style="gap:4px"><div class="stat"><svg width="12" height="12" viewBox="0 0 14 14"><path d="M12 1L5 8M4 7l3 3M2.5 11.5l2-2" stroke="#e0a24a" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>${c.atk}</div><div class="stat"><svg width="10" height="13" viewBox="0 0 11 14"><path d="M5.5 1C8 5 10 7.5 10 9.5a4.5 4.5 0 0 1-9 0C1 7.5 3 5 5.5 1z" fill="#c81e1e"/></svg>${c.hp}</div></div>`;
+  else stats = `<div class="row" style="gap:3px"><div class="stat" style="background:rgba(255,122,74,.15);border:1px solid #ff7a4a;color:#ffb48a" title="Attack">${c.atk}</div><div class="stat" style="background:rgba(238,244,255,.1);border:1px solid #c9d6e8;color:#eef4ff" title="Hull">${c.hull}</div>${c.shld!=null?`<div class="stat" style="background:rgba(90,216,255,.15);border:1px solid #5ad8ff;color:#9ae8ff" title="Shields">${c.shld}</div>`:''}</div>`;
+  const sym = S === 'TW'
+    ? `<svg width="14" height="18" viewBox="0 0 16 20" aria-label="${RN[c.r]}"><circle cx="8" cy="7" r="6" fill="${rc}" stroke="#120c09" stroke-width="1.2"/><path d="M5.5 10h5l1.5 9H4z" fill="${rc}" stroke="#120c09" stroke-width="1.2"/><circle cx="8" cy="7" r="2.2" fill="#120c09"/></svg>`
+    : `<svg width="16" height="16" viewBox="0 0 18 18" aria-label="${RN[c.r]}"><path d="M9 1l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="${rc}" stroke="#05080f"/></svg>`;
+  return `<div class="card ${S}" style="--wc:${wc};--wc2:${wc2}">
+   <div class="row"><div class="cost">${c.cost}</div><div class="name">${esc(c.name)}</div></div>
+   <div class="art">${artHTML(c)}${c.foil?'<div class="foil"></div>':''}</div>
+   <div class="type"><span>${esc(c.type)} — ${esc(c.sub)}</span>${sym}</div>
+   <div class="rules">${ab}${c.flavor?`<div class="flav">${esc(c.flavor)}</div>`:''}</div>
+   <div class="foot"><div class="coll"><b>${S}</b> · ${c.num} · ${c.r} · ${esc(c.wing)}<br>Illus. [ARTIST] · © [YOUR BRAND]</div>${stats}</div>
+  </div>`;
+}
+function setup(){
+  const s = SETS[cur]; document.body.className = cur.toLowerCase();
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.set === cur));
+  document.getElementById('setName').textContent = s.name; document.getElementById('setSub').textContent = s.subtitle + ' · 300 cards';
+  const types = [...new Set(s.cards.map(c => c.type))];
+  fType.innerHTML = '<option value="">All types</option>' + types.map(t => `<option>${t}</option>`).join('');
+  fCost.innerHTML = '<option value="">Any cost</option>' + [...new Set(s.cards.map(c => c.cost))].sort((a,b)=>a-b).map(n => `<option>${n}</option>`).join('');
+  wingF = '';
+  document.getElementById('wings').innerHTML = `<span class="chip on" data-w="">All ${cur==='TW'?'wings':'factions'}</span>` +
+    Object.entries(s.wings).map(([w, d]) => `<span class="chip" data-w="${esc(w)}" title="${esc(d)}" style="border-color:${WC[w][0]}">${esc(w)} · ${esc(d)}</span>`).join('');
+  render();
+}
+function render(){
+  const s = SETS[cur], q = document.getElementById('q').value.toLowerCase();
+  const list = s.cards.filter(c => (!fType.value || c.type === fType.value) && (!fRar.value || c.r === fRar.value) && (!fCost.value || c.cost == fCost.value)
+    && (!wingF || c.wing === wingF) && (!q || (c.name + ' ' + c.ab.map(a => a.kw + a.body).join(' ') + ' ' + c.sub).toLowerCase().includes(q)));
+  document.getElementById('count').textContent = `${list.length} of ${s.cards.length} cards · ${Object.keys(ART()).filter(k=>k.startsWith(cur+'-')).length} with final art`;
+  const g = document.getElementById('grid'); g.innerHTML = list.map(c => `<div class="cell" data-id="${c.id}">${cardHTML(c)}</div>`).join(''); fitAll(g);
+}
+function fitAll(root){
+  root.querySelectorAll('.rules').forEach(r => {
+    let fs = parseFloat(getComputedStyle(r).fontSize);
+    while (r.scrollHeight > r.clientHeight + 1 && fs > 10.4) { fs -= 0.4; r.style.fontSize = fs + 'px'; }
+    const fl = r.querySelector('.flav');
+    if (fl && r.scrollHeight > r.clientHeight + 1) fl.remove();
+  });
+}
+function openCard(id){
+  const c = SETS[cur].cards.find(x => x.id === id);
+  document.getElementById('big').innerHTML = cardHTML(c); document.getElementById('modal').classList.add('on'); fitAll(document.getElementById('big'));
+  document.getElementById('side').innerHTML = `<h3>${esc(c.name)}</h3><div>${RN[c.r]} ${esc(c.type)} · ${esc(c.wing)} · ${c.id}</div>
+   <div class="k">Art file</div><div>Save the painting as <code>art/${c.set}/${c.id}.png</code></div>
+   <div class="k">Art prompt (Gemini / Nano Banana / Stable Diffusion)</div><textarea readonly id="pr">${esc(c.art_prompt)}</textarea>
+   <button id="cp">Copy prompt</button><button class="close" id="cl">Close</button>`;
+  document.getElementById('modal').classList.add('on');
+  document.getElementById('cp').onclick = () => { const t = document.getElementById('pr'); t.select(); navigator.clipboard?.writeText(t.value).catch(()=>document.execCommand('copy')); document.getElementById('cp').textContent = 'Copied!'; };
+  document.getElementById('cl').onclick = closeCard;
+}
+function closeCard(){ document.getElementById('modal').classList.remove('on'); }
+document.querySelectorAll('.tab').forEach(b => b.onclick = () => { cur = b.dataset.set; setup(); });
+['q','fType','fRar','fCost'].forEach(id => document.getElementById(id).addEventListener('input', render));
+document.getElementById('wings').onclick = e => { const ch = e.target.closest('.chip'); if (!ch) return; wingF = ch.dataset.w;
+  document.querySelectorAll('#wings .chip').forEach(x => x.classList.toggle('on', x === ch)); render(); };
+document.getElementById('grid').onclick = e => { const cell = e.target.closest('.cell'); if (cell) openCard(cell.dataset.id); };
+document.getElementById('modal').onclick = e => { if (e.target.id === 'modal') closeCard(); };
+addEventListener('keydown', e => { if (e.key === "Escape") closeCard(); });
+setup();
+</script>
+</body>
+</html>

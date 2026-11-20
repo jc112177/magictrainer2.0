@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>STARFALL ARMADA</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&amp;family=Exo+2:ital,wght@0,500;0,700;1,500&amp;family=Share+Tech+Mono&amp;family=Inter:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#5ad8ff}a:hover{color:#9ae8ff}
+</style>
+</helmet>
+<div style="width: 1540px; height: 1080px; box-sizing: border-box; padding: 56px 64px; display: flex; gap: 48px; background-color: #04060c; background-image: radial-gradient(ellipse at 75% 20%, rgba(40,90,200,0.22) 0, transparent 55%), radial-gradient(ellipse at 20% 90%, rgba(255,110,40,0.10) 0, transparent 50%), linear-gradient(rgba(90,216,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(90,216,255,0.035) 1px, transparent 1px); background-size: auto, auto, 40px 40px, 40px 40px; font-family: Inter, sans-serif; color: #c9d6e8">
+  <div style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 18px">
+    <div style="font-family: 'Share Tech Mono', monospace; font-size: 14px; letter-spacing: 4px; color: #5ad8ff">NEW WORLD · SET SFA1</div>
+    <h1 style="margin: 0; font-family: Orbitron, sans-serif; font-weight: 900; font-size: 40px; line-height: 1.02; color: #eef4ff; letter-spacing: 1px">STARFALL ARMADA</h1>
+    <div style="font-family: Orbitron, sans-serif; font-weight: 700; font-size: 16px; color: #ff9a4a; letter-spacing: 1px">Mechs · Battleships · Pilots</div>
+    <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #9fb0c8">The year is 2431 and fleets fight across the Helios Belt. Build a flagship, launch fighter wings from its hangar, and put ace pilots in the cockpit of giant mech frames.</p>
+    <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid #1e3550; background-color: rgba(10,22,40,0.8)">
+      <div style="font-family: Orbitron, sans-serif; font-weight: 700; font-size: 13px; color: #5ad8ff; letter-spacing: 1px">CORE MECHANICS</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #eef4ff">Shields X</b> · blocks the first X damage each turn</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #eef4ff">Hangar</b> · ships that carry and launch fighters</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #eef4ff">Pilot</b> · attach to a Frame to power it up</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #eef4ff">Broadside</b> · damage spills to other enemies</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #eef4ff">Orbit</b> · stations that give every turn</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid #1e3550; background-color: rgba(10,22,40,0.8)">
+      <div style="font-family: Orbitron, sans-serif; font-weight: 700; font-size: 13px; color: #5ad8ff; letter-spacing: 1px">STAT BLOCK</div>
+      <div style="display: flex; gap: 10px; font-family: Orbitron, sans-serif; font-size: 12px; font-weight: 700">
+        <span style="color: #ff7a4a">ATK</span><span style="color: #eef4ff">HULL</span><span style="color: #5ad8ff">SHLD</span>
+      </div>
+      <div style="font-size: 13px; line-height: 1.45; color: #9fb0c8">Cost sits in the hex Energy Core at the top left.</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; align-content: center">
+    <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+      <div style="width: 330px; height: 462px; box-sizing: border-box; position: relative; padding: 11px; border-radius: 10px; clip-path: polygon(0 18px, 18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%); background-color: #0c1220; background-image: linear-gradient(145deg, #1e2a40 0%, #0a0f1a 45%, #18233a 100%), repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 6px); box-shadow: inset 0 0 0 2px {{ c.accent }}, inset 0 0 0 4px #05080f, inset 0 0 26px rgba(90,216,255,0.12); display: flex; flex-direction: column; gap: 7px">
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div style="width: 44px; height: 44px; flex-shrink: 0; clip-path: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0 50%); background-image: radial-gradient(circle at 50% 45%, #ffffff 0, #9ae8ff 25%, #1a7aff 70%, #0a2a6a 100%); display: flex; align-items: center; justify-content: center; font-family: Orbitron, sans-serif; font-weight: 900; font-size: 20px; color: #04101e; text-shadow: 0 0 6px rgba(255,255,255,0.8)">{{ c.cost }}</div>
+          <div style="flex: 1; min-width: 0; padding: 7px 10px; background-image: linear-gradient(90deg, rgba(90,216,255,0.18), rgba(90,216,255,0.04)); border-left: 3px solid {{ c.accent }}; border-bottom: 1px solid rgba(90,216,255,0.35); font-family: Orbitron, sans-serif; font-weight: 700; font-size: 13.5px; line-height: 1.15; color: #eef4ff; letter-spacing: 0.4px">{{ c.name }}</div>
+        </div>
+        <div style="position: relative; height: 196px; overflow: hidden; border: 1px solid rgba(90,216,255,0.5); box-shadow: 0 0 14px rgba(90,216,255,0.15)">
+          <img src="{{ c.art }}" alt="{{ c.alt }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+          <div style="position: absolute; left: 6px; top: 6px; width: 14px; height: 14px; border-left: 2px solid #5ad8ff; border-top: 2px solid #5ad8ff"></div>
+          <div style="position: absolute; right: 6px; bottom: 6px; width: 14px; height: 14px; border-right: 2px solid #5ad8ff; border-bottom: 2px solid #5ad8ff"></div>
+          <div style="position: absolute; right: 8px; top: 6px; font-family: 'Share Tech Mono', monospace; font-size: 10px; color: rgba(154,232,255,0.85)">{{ c.code }}</div>
+          <sc-if value="{{ c.foil }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; inset: 0; background-image: linear-gradient(115deg, transparent 22%, rgba(120,220,255,0.24) 40%, rgba(255,140,230,0.2) 50%, rgba(255,230,140,0.18) 60%, transparent 76%); mix-blend-mode: screen"></div>
+          </sc-if>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 5px 9px; background-color: rgba(5,10,20,0.85); border: 1px solid #1e3550">
+          <div style="font-family: Orbitron, sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.6px; color: #cfe0f5">{{ c.type }}</div>
+          <svg width="18" height="18" viewBox="0 0 18 18" role="img" aria-label="{{ c.rarity }} set symbol"><path d="M9 1 L11 7 L17 9 L11 11 L9 17 L7 11 L1 9 L7 7 Z" fill="{{ c.rcol }}" stroke="#05080f" stroke-width="1"></path></svg>
+        </div>
+        <div style="flex: 1; min-height: 0; padding: 9px 11px; background-image: linear-gradient(180deg, rgba(16,28,48,0.95), rgba(8,14,26,0.95)); border: 1px solid #1e3550; color: #dbe6f5; font-family: 'Exo 2', sans-serif; font-size: 12.5px; line-height: 1.3; display: flex; flex-direction: column; gap: 5px; overflow: hidden">
+          <div><b style="color: #9ae8ff">{{ c.kw1 }}</b> {{ c.body1 }} <i style="color: #7a8ca8">{{ c.rem1 }}</i></div>
+          <sc-if value="{{ c.has2 }}" hint-placeholder-val="{{ true }}">
+            <div><b style="color: #9ae8ff">{{ c.kw2 }}</b> {{ c.body2 }} <i style="color: #7a8ca8">{{ c.rem2 }}</i></div>
+          </sc-if>
+          <div style="height: 1px; background-image: linear-gradient(90deg, rgba(90,216,255,0.6), transparent); margin: 2px 0"></div>
+          <div style="font-family: 'Share Tech Mono', monospace; font-size: 11px; line-height: 1.38; color: #8aa0bd">{{ c.flavor }}</div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 6px">
+          <div style="display: flex; flex-direction: column; gap: 1px; font-family: 'Share Tech Mono', monospace; font-size: 9.5px; line-height: 1.3; color: #6f84a2">
+            <div><b style="color: #a8bcd8">SFA1</b> · {{ c.num }} · {{ c.rarityShort }} · EN</div>
+            <div>Illus. [ARTIST NAME] · © 2026 [YOUR BRAND]</div>
+          </div>
+          <sc-if value="{{ c.hasStats }}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; gap: 3px; font-family: Orbitron, sans-serif; font-weight: 900; font-size: 15px">
+              <div style="min-width: 30px; padding: 3px 6px; text-align: center; background-color: rgba(255,122,74,0.15); border: 1px solid #ff7a4a; color: #ffb48a">{{ c.atk }}</div>
+              <div style="min-width: 30px; padding: 3px 6px; text-align: center; background-color: rgba(238,244,255,0.1); border: 1px solid #c9d6e8; color: #eef4ff">{{ c.hull }}</div>
+              <sc-if value="{{ c.hasShld }}" hint-placeholder-val="{{ true }}">
+                <div style="min-width: 30px; padding: 3px 6px; text-align: center; background-color: rgba(90,216,255,0.15); border: 1px solid #5ad8ff; color: #9ae8ff">{{ c.shld }}</div>
+              </sc-if>
+            </div>
+          </sc-if>
+          <sc-if value="{{ c.noStats }}" hint-placeholder-val="{{ false }}">
+            <div style="padding: 3px 10px; background-color: rgba(90,216,255,0.12); border: 1px solid #5ad8ff; font-family: Orbitron, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 1px; color: #9ae8ff">{{ c.badge }}</div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1540,"height":1080}}'>
+class Component extends DCLogic {
+renderVals() {
+const R = { C: ['Common', '#8a96a8', 'C'], U: ['Uncommon', '#cfe0f5', 'U'], R: ['Rare', '#ffc24a', 'R'], L: ['Legendary', '#ff5ad0', 'L'] };
+const raw = [
+{ name: "UNS Leviathan's Wake", cost: 8, art: '/_blob/7b9c028c37ebe66cf6828c407a5a11fd', alt: 'A massive grey battleship firing a red laser over an orange planet', type: 'Legendary Flagship — Dreadnought', r: 'L', accent: '#ff5ad0', foil: true, code: 'BB-01',
+  kw1: 'Broadside.', body1: 'When this attacks, deal 2 damage to each other enemy ship.', rem1: '',
+  kw2: 'Hangar 2.', body2: 'At the start of your turn, launch a 1/1 Fighter token.', rem2: '(Up to 2 at a time.)',
+  flavor: 'Flagship of the Seventh Fleet. Eleven kilometers of bad news.', atk: 9, hull: 12, shld: 3, num: '001/220' },
+{ name: 'Vanguard Frame "Talon"', cost: 5, art: '/_blob/d29540092613ab2741fb1dd9af12ea28', alt: 'A white and orange battle mech in a hangar bay under floodlights', type: 'Frame — Assault Mech', r: 'R', accent: '#ff9a4a', code: 'VF-07',
+  kw1: 'Pilot Slot.', body1: 'While a Pilot is attached, this gets +2 ATK and can attack the turn it enters.', rem1: '',
+  kw2: 'Overdrive.', body2: 'Pay 2: +3 ATK until end of turn. Then this loses its Shields.', rem2: '',
+  flavor: 'Ten meters of armor, waiting for a heartbeat.', atk: 5, hull: 6, shld: 1, num: '043/220' },
+{ name: 'Commander Ilsa Varro', cost: 3, art: '/_blob/5f051f1a4b9953a8b4e65c6082231da6', alt: 'A pilot in a white helmet with a sunset-reflecting visor in a cockpit', type: 'Pilot — Human Ace', r: 'R', accent: '#5ad8ff', code: 'ACE',
+  kw1: 'Pilot.', body1: 'Attach to a Frame you control. That Frame gets +1 ATK and Shields 1.', rem1: '(If the Frame falls, Ilsa returns to hand.)',
+  kw2: 'Ace.', body2: 'The first time each turn the attached Frame destroys a unit, draw a card.', rem2: '',
+  flavor: '"Talon, wake up. We have work."', atk: 2, hull: 2, num: '071/220' },
+{ name: 'Interceptor Wing', cost: 2, art: '/_blob/92cd78f08616c389c2d2abbd2ed04f5e', alt: 'A squadron of orange-winged fighters streaking through a nebula', type: 'Squadron — Fighters', r: 'C', accent: '#8a96a8', code: 'SQ-3',
+  kw1: 'Swift.', body1: 'Can attack the turn it enters.', rem1: '',
+  kw2: 'Screen.', body2: 'Ships you control with Hangar take 1 less damage from attacks.', rem2: '',
+  flavor: 'Fast, cheap and always first through the breach.', atk: 2, hull: 1, num: '118/220' },
+{ name: 'Orbital Lance Strike', cost: 4, art: '/_blob/c311cc113bed9cbff58c53e56b62750b', alt: 'A white-hot beam from an orbital platform hitting a planet below', type: 'Tactic — Bombardment', r: 'U', accent: '#ffc24a', code: 'TAC',
+  kw1: 'Strike.', body1: 'Deal 5 damage to a ship or Frame. Shields do not stop this damage.', rem1: '',
+  kw2: 'Overcharge.', body2: 'If you control a Station, deal 2 damage to your opponent too.', rem2: '',
+  flavor: 'Fire mission confirmed. Impact in four seconds.', badge: 'TACTIC', num: '167/220' },
+{ name: 'Helios Station', cost: 4, art: '/_blob/6944e34281fdaf69a0bbab841cd6e24c', alt: 'A ring-shaped space station with solar panels in front of a bright star', type: 'Station — Orbital', r: 'U', accent: '#ffc24a', code: 'STN',
+  kw1: 'Orbit.', body1: 'At the start of your turn, gain 1 extra Energy this turn.', rem1: '',
+  kw2: 'Drydock.', body2: 'Pay 2: Restore 3 Hull to a ship you control.', rem2: '',
+  flavor: 'Fuel, repairs and a cold drink. In that order.', badge: 'STATION', num: '201/220' }
+];
+const cards = raw.map((c) => Object.assign({}, c, {
+  rarity: R[c.r][0], rcol: R[c.r][1], rarityShort: R[c.r][2], foil: !!c.foil,
+  has2: !!c.kw2, kw2: c.kw2 || '', body2: c.body2 || '', rem2: c.rem2 || '',
+  hasStats: c.atk !== undefined, noStats: c.atk === undefined, badge: c.badge || '',
+  hasShld: c.shld !== undefined, shld: c.shld === undefined ? '' : c.shld, hull: c.hull === undefined ? '' : c.hull
+}));
+return { cards: cards };
+}
+}
+</script>
+</body>
+</html>

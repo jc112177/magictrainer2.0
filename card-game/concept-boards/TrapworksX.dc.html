@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TRAPWORKS: The Lower Floors</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&amp;family=Crimson+Pro:ital,wght@0,500;0,700;1,500&amp;family=Special+Elite&amp;family=Inter:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#e0a24a}a:hover{color:#f3c27a}
+</style>
+</helmet>
+<div style="width: 1540px; height: 1080px; box-sizing: border-box; padding: 56px 64px; display: flex; gap: 48px; background-color: #0b0908; background-image: radial-gradient(ellipse at 70% 30%, rgba(122,26,18,0.18) 0, transparent 55%), repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 2px, transparent 2px, transparent 9px); font-family: Inter, sans-serif; color: #d9d0bf">
+  <div style="width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 18px">
+    <div style="font-family: 'Special Elite', monospace; font-size: 14px; letter-spacing: 4px; color: #b23a2c">EXPANSION · SET TW2</div>
+    <h1 style="margin: 0; font-family: Cinzel, serif; font-weight: 900; font-size: 46px; line-height: 1; color: #efe6d2">TRAPWORKS</h1>
+    <div style="font-family: Cinzel, serif; font-weight: 700; font-size: 22px; color: #e0a24a">The Lower Floors</div>
+    <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #b8ae9c">Beneath Hollow Mill lie the Rooms: flooding cells, locked vaults and clockwork devices. This set adds two new card types, <b style="color: #efe6d2">Rooms</b> and <b style="color: #efe6d2">Devices</b>.</p>
+    <div style="display: flex; flex-direction: column; gap: 7px; padding: 16px; border: 1px solid #3b2a22; background-color: #13100e">
+      <div style="font-family: Cinzel, serif; font-weight: 700; font-size: 14px; color: #e0a24a; letter-spacing: 1px">ANATOMY OF A CARD</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #efe6d2">1 Cost</b> · Energy to play it (top left gear)</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #efe6d2">2 Name</b> · on the brass plate</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #efe6d2">3 Type line</b> · card type, subtypes and set symbol</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #efe6d2">4 Rules text</b> · keywords in bold, reminders in italics</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #efe6d2">5 Flavor</b> · story text, no game effect</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #efe6d2">6 Stats</b> · ATK (blade) and HP (blood drop)</div>
+      <div style="font-size: 13px; line-height: 1.45"><b style="color: #efe6d2">7 Collector line</b> · set, number, rarity, artist</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-family: Cinzel, serif; font-weight: 700; font-size: 14px; color: #e0a24a; letter-spacing: 1px">RARITY (SET SYMBOL COLOR)</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 12.5px">
+        <span style="padding: 3px 9px; border: 1px solid #8a8a8a; color: #c9c9c9">Common</span>
+        <span style="padding: 3px 9px; border: 1px solid #c0ccd8; color: #dfe7f0">Uncommon</span>
+        <span style="padding: 3px 9px; border: 1px solid #e0b452; color: #f3cf7a">Rare</span>
+        <span style="padding: 3px 9px; border: 1px solid #ff6a3a; color: #ff9a6a">Legendary</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; align-content: center">
+    <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+      <div style="width: 330px; height: 462px; box-sizing: border-box; position: relative; padding: 11px; border-radius: 14px; background-color: #1a1310; background-image: linear-gradient(160deg, #2c201a 0%, #120d0b 60%, #1f1612 100%); border: 2px solid #6b5230; box-shadow: 0 26px 50px rgba(0,0,0,0.7), inset 0 0 0 3px #120c09, {{ c.ring }}; display: flex; flex-direction: column; gap: 7px">
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div style="width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; background-image: radial-gradient(circle at 35% 30%, #ffe6a8, #b8862e 55%, #5a3a10); border: 2px solid #2a1a08; box-shadow: 0 0 0 3px #3a2a14, 0 0 0 5px #a07a3a, 0 4px 8px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-family: Cinzel, serif; font-weight: 900; font-size: 21px; color: #1a1006">{{ c.cost }}</div>
+          <div style="flex: 1; min-width: 0; padding: 6px 10px; border-radius: 4px; background-image: linear-gradient(180deg, #e8c987 0%, #b8913f 48%, #8c6a26 52%, #c9a45a 100%); border: 1px solid #3a2a10; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.5); font-family: Cinzel, serif; font-weight: 700; font-size: 14.5px; line-height: 1.15; color: #23170a; text-shadow: 0 1px 0 rgba(255,240,200,0.6)">{{ c.name }}</div>
+        </div>
+        <div style="position: relative; height: 196px; border: 2px solid #050302; border-radius: 3px; overflow: hidden; box-shadow: 0 0 0 1px #6b5230">
+          <img src="{{ c.art }}" alt="{{ c.alt }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+          <div style="position: absolute; inset: 0; box-shadow: inset 0 0 24px rgba(0,0,0,0.75)"></div>
+          <sc-if value="{{ c.foil }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; inset: 0; background-image: linear-gradient(115deg, transparent 25%, rgba(255,230,180,0.22) 42%, rgba(160,220,255,0.18) 50%, rgba(255,160,220,0.16) 57%, transparent 72%); mix-blend-mode: screen"></div>
+          </sc-if>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 5px 9px; border-radius: 3px; background-image: linear-gradient(180deg, #2a1f19, #15100d); border: 1px solid #4a372b; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06)">
+          <div style="font-family: Cinzel, serif; font-weight: 700; font-size: 12px; letter-spacing: 0.5px; color: #efe6d2">{{ c.type }}</div>
+          <svg width="16" height="20" viewBox="0 0 16 20" role="img" aria-label="{{ c.rarity }} set symbol"><circle cx="8" cy="7" r="6" fill="{{ c.rcol }}" stroke="#120c09" stroke-width="1.2"></circle><path d="M5.5 10 L10.5 10 L12 19 L4 19 Z" fill="{{ c.rcol }}" stroke="#120c09" stroke-width="1.2"></path><circle cx="8" cy="7" r="2.2" fill="#120c09"></circle></svg>
+        </div>
+        <div style="flex: 1; min-height: 0; padding: 9px 11px; border-radius: 3px; background-image: linear-gradient(180deg, #f1e7cf 0%, #ddcda6 100%); border: 1px solid #8a7550; box-shadow: inset 0 0 14px rgba(120,90,40,0.25); color: #1d1712; font-family: 'Crimson Pro', serif; font-size: 13.5px; line-height: 1.32; display: flex; flex-direction: column; gap: 5px; overflow: hidden">
+          <div><b>{{ c.kw1 }}</b> {{ c.body1 }} <i style="color: #5a4a38">{{ c.rem1 }}</i></div>
+          <sc-if value="{{ c.has2 }}" hint-placeholder-val="{{ true }}">
+            <div><b>{{ c.kw2 }}</b> {{ c.body2 }} <i style="color: #5a4a38">{{ c.rem2 }}</i></div>
+          </sc-if>
+          <div style="height: 1px; background-image: linear-gradient(90deg, transparent, #8a7550, transparent); margin: 2px 0"></div>
+          <div style="font-family: 'Special Elite', monospace; font-size: 11.5px; line-height: 1.35; color: #5e4e3c">{{ c.flavor }}</div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px">
+          <div style="display: flex; flex-direction: column; gap: 1px; font-size: 9.5px; line-height: 1.3; color: #9a8c78">
+            <div><b style="color: #c9bca6">TW2</b> · {{ c.num }} · {{ c.rarityShort }} · EN</div>
+            <div>Illus. [ARTIST NAME] · © 2026 [YOUR BRAND]</div>
+          </div>
+          <sc-if value="{{ c.hasStats }}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; gap: 5px">
+              <div style="display: flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 4px; background-image: linear-gradient(180deg, #3a1410, #1a0806); border: 1px solid #c9a227; box-shadow: 0 2px 4px rgba(0,0,0,0.5); font-family: Cinzel, serif; font-weight: 900; font-size: 16px; color: #f3e7cc">
+                <svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><path d="M12 1 L5 8 M4 7 L7 10 M2.5 11.5 L4.5 9.5" stroke="#e0a24a" stroke-width="1.8" stroke-linecap="round" fill="none"></path></svg>{{ c.atk }}
+              </div>
+              <div style="display: flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 4px; background-image: linear-gradient(180deg, #3a1410, #1a0806); border: 1px solid #c9a227; box-shadow: 0 2px 4px rgba(0,0,0,0.5); font-family: Cinzel, serif; font-weight: 900; font-size: 16px; color: #f3e7cc">
+                <svg width="11" height="14" viewBox="0 0 11 14" aria-hidden="true"><path d="M5.5 1 C8 5 10 7.5 10 9.5 A4.5 4.5 0 0 1 1 9.5 C1 7.5 3 5 5.5 1 Z" fill="#c81e1e"></path></svg>{{ c.hp }}
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ c.noStats }}" hint-placeholder-val="{{ false }}">
+            <div style="padding: 3px 10px; border-radius: 4px; background-image: linear-gradient(180deg, #2a1f19, #15100d); border: 1px solid #c9a227; font-family: Cinzel, serif; font-weight: 700; font-size: 12px; letter-spacing: 1px; color: #e0a24a">{{ c.badge }}</div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1540,"height":1080}}'>
+class Component extends DCLogic {
+renderVals() {
+const R = { C: ['Common', '#9a9a9a', 'C'], U: ['Uncommon', '#cfd9e4', 'U'], R: ['Rare', '#e0b452', 'R'], L: ['Legendary', '#ff6a3a', 'L'] };
+const ring = (col) => 'inset 0 0 0 5px ' + col;
+const raw = [
+{ name: 'The Warden, Architect of Rooms', cost: 6, art: '/_blob/e58ddddd0212ac9ad605bbae4c88b091', alt: 'A masked figure under a single bulb in a factory hall of glowing doors', type: 'Legendary Mastermind — Human Overseer', r: 'L', ring: '#8a1c14', foil: true,
+  kw1: 'Trial.', body1: 'At the start of your turn, hold a Trial.', rem1: '(Your opponent chooses: sacrifice a Survivor, or lose 3 life.)',
+  kw2: 'Architect.', body2: 'Your Rooms cost 1 less. Whenever a Room enters, draw a card.', rem2: '',
+  flavor: 'Every room is a question. Every answer costs blood.', atk: 3, hp: 7, num: '001/180' },
+{ name: 'Hollow Mill Orderly', cost: 2, art: '/_blob/0d125180cee711cb67b0073291d30fcc', alt: 'A porcelain-masked henchman raising a lantern in a dim corridor', type: 'Minion — Masked Henchman', r: 'C', ring: '#4a4a46',
+  kw1: 'Guard.', body1: '', rem1: '(Enemies must attack units with Guard first.)',
+  kw2: 'Last Count.', body2: 'When this is defeated, your opponent loses 1 life.', rem2: '',
+  flavor: 'It never speaks. It only counts.', atk: 2, hp: 2, num: '047/180' },
+{ name: 'Wren Holloway, Locksmith', cost: 3, art: '/_blob/d73856027f175443bf1b918520eaaf73', alt: 'A kneeling survivor picking one of many locks by lantern light', type: 'Survivor — Human Locksmith', r: 'R', ring: '#3f6a5c',
+  kw1: 'Escape —', body1: 'Disarm a Trap of your choice.', rem1: '(Escape triggers when this survives a Trial.)',
+  kw2: 'Pick the Lock.', body2: 'Tap: Look at one face-down Trap your opponent controls.', rem2: '',
+  flavor: 'There is no lock she has not met before.', atk: 1, hp: 3, num: '088/180' },
+{ name: 'Clockwork Collar', cost: 3, art: '/_blob/b8fdadd933c6ded92eec23c67bf1ac42', alt: 'A spiked steel collar with a brass clock and gears', type: 'Trap — Device', r: 'U', ring: '#a07a3a',
+  kw1: 'Attach.', body1: 'Put this on an enemy unit.', rem1: '(It stays until removed.)',
+  kw2: 'Countdown.', body2: 'At the end of each turn, the wearer takes 1 damage. If it attacked this turn, it takes 2 instead.', rem2: '',
+  flavor: 'Tick. Tick. Tick.', badge: 'DEVICE', num: '112/180' },
+{ name: 'Room 13: The Flooding Cell', cost: 4, art: '/_blob/78cb48cad08fefc668aa793f75bdbd95', alt: 'A tiled cell filling with water under a barred window, a hand rising from the water', type: 'Room — Location', r: 'R', ring: '#2f6a66',
+  kw1: 'Rising Water.', body1: 'At the start of each turn, add a Water counter here. Units with HP equal to or less than the Water counters can not attack.', rem1: '',
+  kw2: 'Escape Hatch.', body2: 'Pay 3: Remove all Water counters.', rem2: '',
+  flavor: 'The drain was never meant to drain.', badge: 'ROOM', num: '136/180' },
+{ name: 'The Choice', cost: 1, art: '/_blob/139f24f92d134c770e7292bdc989d8ea', alt: 'Two glowing doors, red and green, above a tape recorder and two keys', type: 'Trial — Event', r: 'U', ring: '#7a1a12',
+  kw1: 'Trial.', body1: 'Your opponent chooses one: they sacrifice a unit, or you draw two cards.', rem1: '',
+  flavor: '"Door one, or door two? The tape is already running."', badge: 'EVENT', num: '159/180' }
+];
+const cards = raw.map((c) => Object.assign({}, c, {
+  rarity: R[c.r][0], rcol: R[c.r][1], rarityShort: R[c.r][2],
+  ring: ring(c.ring), foil: !!c.foil,
+  has2: !!c.kw2, kw2: c.kw2 || '', body2: c.body2 || '', rem2: c.rem2 || '',
+  hasStats: c.atk !== undefined, noStats: c.atk === undefined, badge: c.badge || ''
+}));
+return { cards: cards };
+}
+}
+</script>
+</body>
+</html>
